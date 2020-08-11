@@ -2,8 +2,10 @@ import os
 from flask import Flask, request, abort, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
-from models import Movie, Actor, movies_actors, setup_db, db, db_drop_and_create_all
+from models import Movie, Actor, movies_actors, setup_db, db,\
+                   db_drop_and_create_all
 from auth import AuthError, requires_auth
+
 
 def create_app(test_config=None):
     # create and configure the app
@@ -75,7 +77,6 @@ def create_app(test_config=None):
         except:
             abort(404)
 
-
     @app.route("/actors", methods=["POST"])
     @requires_auth("add:actor")
     def post_actors(jwt):
@@ -87,7 +88,7 @@ def create_app(test_config=None):
         if not name or not age:
             abort(400)
         try:
-            actor  = Actor(
+            actor = Actor(
                 name=name,
                 age=age,
                 gender=gender
@@ -105,7 +106,6 @@ def create_app(test_config=None):
             abort(422)
         finally:
             db.session.close()
-
 
     @app.route("/movies", methods=["POST"])
     @requires_auth("add:movie")
@@ -156,9 +156,9 @@ def create_app(test_config=None):
             actor.age = age
             actor.gender = gender
             if movies is not None:
-                
+
                 movies = Movie.query.filter(Movie.title.in_(movies)).all()
-                
+
                 actor.movies = movies
             actor.update()
             return jsonify({
@@ -170,7 +170,6 @@ def create_app(test_config=None):
             abort(422)
         finally:
             db.session.close()
-
 
     @app.route("/movies/<movie_id>", methods=["PATCH"])
     @requires_auth("modify:movies")
@@ -214,7 +213,7 @@ def create_app(test_config=None):
                         "error": 422,
                         "message": "unprocessable"
         }), 422
-        
+
     @app.errorhandler(404)
     def unprocessable(error):
         return jsonify({

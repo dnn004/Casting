@@ -6,12 +6,13 @@ from flask_sqlalchemy import SQLAlchemy
 from app import create_app
 from models import setup_db, Movie, Actor
 
-ASSISTANT=os.environ.get('ASSISTANT')
-DIRECTOR=os.environ.get('DIRECTOR')
-PRODUCER=os.environ.get('PRODUCER')
+ASSISTANT = os.environ.get('ASSISTANT')
+DIRECTOR = os.environ.get('DIRECTOR')
+PRODUCER = os.environ.get('PRODUCER')
 
 os.system("dropdb {}".format("cast_test"))
 os.system("createdb {}".format("cast_test"))
+
 
 class CastTestCase(unittest.TestCase):
 
@@ -67,7 +68,7 @@ class CastTestCase(unittest.TestCase):
             "release_date": "2020-5-15",
             "actors": []
         }
-    
+
     def tearDown(self):
         """Executed after reach test"""
         pass
@@ -118,7 +119,7 @@ class CastTestCase(unittest.TestCase):
         updated_actor = data.get("actor")
         updated_actor.pop("id")
         self.assertEqual(updated_actor, self.another_actor)
-    
+
     # Test delete actor
     def test_delete_actor(self):
         actor = self.test_post_actor()
@@ -134,7 +135,7 @@ class CastTestCase(unittest.TestCase):
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data["success"], True)
         self.assertEqual(int(data.get("id_deleted")), actor["id"])
-    
+
     '''
     TESTS for Movie
     '''
@@ -164,7 +165,6 @@ class CastTestCase(unittest.TestCase):
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data["success"], True)
 
-
     # Test patch movie
     def test_patch_movie(self):
         movie = self.test_post_movie()
@@ -179,7 +179,7 @@ class CastTestCase(unittest.TestCase):
         data = json.loads(res.data)
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data["success"], True)
-    
+
     # Test delete movie
     def test_delete_movie(self):
         movie = self.test_post_movie()
@@ -281,7 +281,7 @@ class CastTestCase(unittest.TestCase):
         data = json.loads(res.data)
         self.assertEqual(res.status_code, 400)
         self.assertEqual(data["success"], False)
-    
+
     # Test error for delete movie
     def test_404_delete_movie(self):
         res = self.client().delete(
@@ -375,7 +375,7 @@ class CastTestCase(unittest.TestCase):
         data = json.loads(res.data)
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data["success"], True)
-    
+
 
 # Make the tests conveniently executable
 if __name__ == "__main__":
