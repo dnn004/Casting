@@ -151,10 +151,9 @@ def create_app(test_config=None):
         gender = request.json.get("gender")
         movies = request.json.get("movies")
 
-        try:
-            actor = Actor.query.get(actor_id)
-        except:
-            abort(404)
+        actor = Actor.query.get(actor_id)
+        if not actor:
+           abort(404) 
 
         # Check if input is valid
         if not name or not age:
@@ -187,9 +186,8 @@ def create_app(test_config=None):
         release_date = request.json.get("release_date")
         actors = request.json.get("actors")
 
-        try:
-            movie = Movie.query.get(movie_id)
-        except:
+        movie = Movie.query.get(movie_id)
+        if not movie:
             abort(404)
 
         # Check if input is valid
