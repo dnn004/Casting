@@ -35,15 +35,14 @@ With postgresql set up, run the command:
 createdb cast
 ```
 
-Then, comment out this line:
+Then, comment out this line which is located on line 7 in models.py:
 ```bash
 database_path = os.environ.get("DATABASE_URL")
 ```
-which is located on line 7 in models.py, and uncomment this line:
+and uncomment this line, which is located on line 8 in models.py:
 ```bash
 # database_path = "postgresql://{}/{}".format(':5433', database_name)
 ```
-which is located on line 8 in models.py.
 
 Then run:
 
@@ -179,18 +178,6 @@ Returns: the id of the movie that was deleted, , a boolean called "success" indi
 }
 ```
 
-## Testing
-To run the tests for local development, run:
-```bash
-python test_app.py
-```
-
-or
-
-```bash
-python3 test_app.py
-```
-
 ## Authentication Roles / RBAC
 There are three roles that can interact with this application:
 <ol>
@@ -215,18 +202,20 @@ The JWT token required for each role can be found in setup.sh in between single 
 Use these tokens in a request's headers like so:
 ```
   headers = {
-    "Authorization": "Bearer JWT_TOKEN_STRING"
+    "Authorization": "Bearer JWT_TOKEN"
   }
 ```
 
-Or if the request is in test_app.py, like so:
-
+## Testing
+To run the tests for local development, run:
+```bash
+python test_app.py
 ```
-  headers = {
-    "Authorization": "Bearer {}".format(JWT_TOKEN)
-  }
-```
-where JWT_TOKEN can be ASSISTANT, DIRECTOR, or PRODUCER
 
+or
+
+```bash
+python3 test_app.py
+```
 
 
