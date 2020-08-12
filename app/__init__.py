@@ -8,18 +8,20 @@ from auth import AuthError, requires_auth
 
 
 def create_app(test_config=None):
-    # create and configure the app
+    # Create and configure the app
     app = Flask(__name__)
     setup_db(app)
     CORS(app)
 
     app.secret_key = os.environ.get("SECRET")
 
-    '''Endpoints:
+    '''
+    Endpoints:
     GET /actors and /movies
     DELETE /actors/ and /movies/
     POST /actors and /movies and
-    PATCH /actors/ and /movies/'''
+    PATCH /actors/ and /movies/
+    '''
 
     @app.route("/actors", methods=["GET"])
     @requires_auth("view:actors")
@@ -85,6 +87,7 @@ def create_app(test_config=None):
         gender = request.json.get("gender")
         movies = request.json.get("movies")
 
+        # Check if input is valid
         if not name or not age:
             abort(400)
         try:
@@ -93,6 +96,8 @@ def create_app(test_config=None):
                 age=age,
                 gender=gender
             )
+            # Search if input movies are in the database
+            # and associate with actor
             if movies is not None:
                 movies = Movie.query.filter(Movie.title.in_(movies)).all()
                 actor.movies = movies
@@ -114,6 +119,7 @@ def create_app(test_config=None):
         release_date = request.json.get("release_date")
         actors = request.json.get("actors")
 
+        # Check if input is valid
         if not title or not release_date:
             abort(400)
         try:
@@ -121,6 +127,8 @@ def create_app(test_config=None):
                 title=title,
                 release_date=release_date
             )
+            # Search if input actors are in the database
+            # and associate with movie
             if actors is not None:
                 actors = Actor.query.filter(Actor.name.in_(actors)).all()
                 movie.actors = actors
@@ -148,6 +156,7 @@ def create_app(test_config=None):
         except:
             abort(404)
 
+        # Check if input is valid
         if not name or not age:
             abort(400)
 
@@ -155,10 +164,10 @@ def create_app(test_config=None):
             actor.name = name
             actor.age = age
             actor.gender = gender
+            # Search if input movies are in the database
+            # and associate with actor
             if movies is not None:
-
                 movies = Movie.query.filter(Movie.title.in_(movies)).all()
-
                 actor.movies = movies
             actor.update()
             return jsonify({
@@ -183,12 +192,15 @@ def create_app(test_config=None):
         except:
             abort(404)
 
+        # Check if input is valid
         if not title or not release_date:
             abort(400)
 
         try:
             movie.title = title
             movie.release_date = release_date
+            # Search if input actors are in the database
+            # and associate with movie
             if actors is not None:
                 actors = Actor.query.filter(Actor.name.in_(actors)).all()
                 movie.actors = actors

@@ -27,9 +27,9 @@ class AuthError(Exception):
 '''
 @DONE implement get_token_auth_header() method
     it should attempt to get the header from the request
-        it should raise an AuthError if no header is present
+    it should raise an AuthError if no header is present
     it should attempt to split bearer and the token
-        it should raise an AuthError if the header is malformed
+    it should raise an AuthError if the header is malformed
     return the token part of the header
 '''
 
@@ -55,7 +55,6 @@ def get_token_auth_header():
         payload: decoded jwt payload
 
     it should raise an AuthError if permissions are not included in the payload
-        !!NOTE check your RBAC settings in Auth0
     it should raise an AuthError if the requested permission string is not in
     the payload permissions array return true otherwise
 '''
@@ -85,10 +84,6 @@ def check_permissions(permission, payload):
     it should decode the payload from the token
     it should validate the claims
     return the decoded payload
-
-    !!NOTE urlopen has a common certificate error described here:
-    https://stackoverflow.com/questions/50236117/scraping-ssl-certificate-
-    verify-failed-error-for-http-en-wikipedia-org
 '''
 
 

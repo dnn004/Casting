@@ -5,7 +5,7 @@ import json
 
 database_name = "cast"
 database_path = os.environ.get("DATABASE_URL")
-
+# database_path = "postgresql://{}/{}".format(':5433', database_name)
 db = SQLAlchemy()
 
 
@@ -72,6 +72,7 @@ class Movie(db.Model):
         db.session.commit()
 
     def format(self):
+        # Query for actors in a movie for return
         actors = db.session.query(movies_actors).join(Movie).join(Actor)\
                 .filter(Movie.id == self.id).with_entities(Actor.name).all()
         actors_return = []
@@ -110,6 +111,7 @@ class Actor(db.Model):
         db.session.commit()
 
     def format(self):
+        # Query for movies which an actor was in for return
         movies = db.session.query(movies_actors).join(Movie).join(Actor)\
                 .filter(Actor.id == self.id).with_entities(Movie.title).all()
         movies_return = []
