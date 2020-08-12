@@ -48,6 +48,7 @@ def get_token_auth_header():
 
     return header_parts[1]
 
+
 '''
 @DONE implement check_permissions(permission, payload) method
     @INPUTS
@@ -73,6 +74,7 @@ def check_permissions(permission, payload):
             'description': 'Permission not found.'
         }, 403)
     return True
+
 
 '''
 @DONE implement verify_decode_jwt(token) method
@@ -141,6 +143,7 @@ def verify_decode_jwt(token):
             "description": "Unable to find the appropriate key"
         }, 401)
 
+
 '''
 @DONE implement @requires_auth(permission) decorator method
     @INPUTS
@@ -161,7 +164,7 @@ def requires_auth(permission=''):
             token = get_token_auth_header()
             try:
                 payload = verify_decode_jwt(token)
-            except:
+            except Exception:
                 abort(401)
             check_permissions(permission, payload)
             return f(payload, *args, **kwargs)

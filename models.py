@@ -5,13 +5,14 @@ import json
 
 database_name = "cast"
 database_path = os.environ.get("DATABASE_URL")
-#database_path = "postgresql://{}/{}".format(':5433', database_name)
+# database_path = "postgresql://{}/{}".format(':5433', database_name)
 db = SQLAlchemy()
 
 
 def db_drop_and_create_all():
     db.drop_all()
     db.create_all()
+
 
 movies_actors = db.Table(
     "movies_actors",

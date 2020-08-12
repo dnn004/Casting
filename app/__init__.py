@@ -35,7 +35,7 @@ def create_app(test_config=None):
                 "success": True,
                 "actors": formatted_actors
             })
-        except:
+        except Exception:
             abort(404)
 
     @app.route("/movies", methods=["GET"])
@@ -50,7 +50,7 @@ def create_app(test_config=None):
                 "success": True,
                 "movies": formatted_movies
             })
-        except:
+        except Exception:
             abort(404)
 
     @app.route("/actors/<actor_id>", methods=["DELETE"])
@@ -63,7 +63,7 @@ def create_app(test_config=None):
                 "success": True,
                 "id_deleted": actor_id
             })
-        except:
+        except Exception:
             abort(404)
 
     @app.route("/movies/<movie_id>", methods=["DELETE"])
@@ -76,7 +76,7 @@ def create_app(test_config=None):
                 "success": True,
                 "id_deleted": movie_id
             })
-        except:
+        except Exception:
             abort(404)
 
     @app.route("/actors", methods=["POST"])
@@ -106,7 +106,7 @@ def create_app(test_config=None):
                 "success": True,
                 "actor": actor.format()
             })
-        except:
+        except Exception:
             db.session.rollback()
             abort(422)
         finally:
@@ -137,7 +137,7 @@ def create_app(test_config=None):
                 "success": True,
                 "movie": movie.format()
             })
-        except:
+        except Exception:
             db.session.rollback()
             abort(422)
         finally:
@@ -153,7 +153,7 @@ def create_app(test_config=None):
 
         actor = Actor.query.get(actor_id)
         if not actor:
-           abort(404) 
+            abort(404)
 
         # Check if input is valid
         if not name or not age:
@@ -173,7 +173,7 @@ def create_app(test_config=None):
                 "success": True,
                 "actor": actor.format()
             })
-        except:
+        except Exception:
             db.session.rollback()
             abort(422)
         finally:
@@ -207,7 +207,7 @@ def create_app(test_config=None):
                 "success": True,
                 "movie": movie.format()
             })
-        except:
+        except Exception:
             db.session.rollback()
             abort(422)
         finally:
@@ -265,5 +265,6 @@ def create_app(test_config=None):
         }), 401
 
     return app
+
 
 app = create_app()
