@@ -1,7 +1,7 @@
 # FSND-capstone
 
 ### Motivation
-This project is for the completion of the Udacity's Fullstack Nanodegree Program.
+This project is for the completion of Udacity's Fullstack Nanodegree Program.
 
 ### Installing Dependencies
 
